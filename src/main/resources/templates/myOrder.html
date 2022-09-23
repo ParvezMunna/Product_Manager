@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" ng-app="myApp1">
+<head>
+<meta charset="utf-8" />
+<!-- Bootstrap core CSS -->
+<link href="../static/css/bootstrap.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.css}" />
+
+
+<script type="text/javascript" th:src="@{/js/angular.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/my_app2.js}"></script>
+<title>Product Manager</title>
+</head>
+
+<body ng-controller='myCtrl'>
+	<div class="container">
+		<div class="row">
+			<div align="center">
+				<div class="jumbotron text-center">
+					<h1 class="">Product Manager</h1>
+					<nav class="navbar navbar-inverse">
+						<div class="container-fluid">
+							<div class="navbar-header">
+								<a class="navbar-brand" href="#">Product Manager</a>
+							</div>
+							<ul class="nav navbar-nav">
+								<li><a href="/">Home</a></li>
+								<li><a href="/product">Product</a></li>
+								<li><a href="/customer">Customer</a></li>
+								<li class="active"><a href="/order">Order</a></li>
+							</ul>
+							<ul class="nav navbar-nav navbar-right">
+								<li><a href="#"><span class="glyphicon glyphicon-user"></span>
+										Sign Up</a></li>
+								<li><a href="#"><span
+										class="glyphicon glyphicon-log-in"></span> Login</a></li>
+							</ul>
+						</div>
+					</nav>
+					<h3>Order Form</h3>
+				</div>
+              <!-- orderno, ordertype, orderdate -->
+			<div class="col-md-12">
+			<div class="panel panel-default">
+			<div class="panel-heading">Order Information </div>
+				<div class="panel-body">
+				<div class="col-md-4">
+						Order No: <input ng-model="orderNo" class="form-control"
+							name="orderNo" type="text" />
+				</div>
+				<div class="col-md-4">
+						OrderType: <br /> <label class="radio-inline"> <input
+							type="radio" ng-model="orderType" name="optradio" value="sell">
+							Sell
+						</label> <label class="radio-inline"> <input type="radio"
+							ng-model="orderType" name="optradio" value="purchase">
+							Purchase
+						</label>
+				</div>
+				<div class="col-md-4">
+						Order Date: <input ng-model="orderDate" type="date"
+							class="form-control" />
+				</div>
+				
+				
+				</div>
+				
+			</div>
+			
+			
+			
+			
+			</div>
+			<!-- customer info -->
+			<div class="col-md-4">
+			<div class="row">
+			<div class="panel panel-primary">
+			   <div class="panel-heading" style="text-align: center;">
+						Customer Information
+				</div>
+				<div class="panel-body">
+						<div class="form-group">
+							<label for="firstName">Customer Name:</label>
+							 <select
+								ng-model="clickedCustomer" class="form-control"
+								ng-options="customer.firstName for customer in customers">
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="cid">Cid: </label> <input
+								ng-model="clickedCustomer.id" type="text" class="form-control"
+								id="cid">
+						</div>
+						<div class="form-group">
+							<label for="lastName">Last Name: </label> <input
+								ng-model="clickedCustomer.lastName" type="text"
+								class="form-control" id="lastName">
+						</div>
+
+					</div>
+			</div>
+			</div>
+			</div>
+			
+			<!-- Product info -->
+			<div class="col-md-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading" style="text-align: center;">
+						Product Information</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="pname">Product Name:</label> <select
+								ng-model="clickedProduct" class="form-control"
+								ng-options="product.name for product in products">
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="pid">Pid: </label> <input
+								ng-model="clickedProduct.id" type="text" class="form-control"
+								id="pid">
+						</div>
+						<div class="form-group">
+							<label for="brand">brand: </label> <input
+								ng-model="clickedProduct.brand" type="text"
+								class="form-control" id="brand">
+						</div>
+                        <div class="form-group">
+							<label for="madein">madein: </label> <input
+								ng-model="clickedProduct.madein" type="text"
+								class="form-control" id="madein">
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<!-- add to cart -->
+			<div class="col-md-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading" style="text-align: center;">Order
+						Information</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="quantity">Quantity: </label> <input
+								ng-model="qty=1" type="text" class="form-control" value="1"
+								id="quantity">
+						</div>
+						<div class="form-group">
+							<label for="price">Price: </label> <input
+								value="{{clickedProduct.price * qty}}" type="text"
+								class="form-control" id="price">
+						</div>
+
+					</div>
+					<div class="panel-footer">
+						<button ng-click="addToCart()" class="btn btn-success">
+							<i class="fa fa-cart-plus"></i> Add to Cart
+						</button>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+			<!-- cart -->
+	<div class="row">
+		<div class="col-md-12">
+
+			<table class="table table-bordered table-striped table-responsive">
+				<thead>
+					<tr>
+						<th colspan="6">
+							<h2 align="center">
+								<i class="fa fa-cart-plus"></i> Cart {{cartProduct.length}}
+							</h2>
+						</th>
+					</tr>
+					<tr>
+						<th>NO</th>
+						<th>Product Name</th>
+						<th>Price</th>
+						<th>Qty</th>
+						<th>Remove</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="cp in cartProduct">
+						<td>{{$index + 1}}</td>
+						<td>{{cp.name}}</td>
+						<td>{{cp.price}}</td>
+						<td><input value="+" type="button" class="btn btn-success" ng-click="qtyINC(cp)"> {{cp.cartqty}} <input
+							value="-" type="button" class="btn btn-danger" ng-click="qtyDec(cp)"></td>
+						<td>
+							<button type="button" ng-click="removeCart(cp)"
+								class="btn btn-danger">Remove</button>
+						</td>
+						<td>{{cp.subTotal}}</td>
+					</tr>
+					<tr>
+						<td colspan="5" style="text-align: right;">Final Total:</td>
+						<td>{{finalTotal}}</td>
+					</tr>
+					<tr>
+						<td colspan="6">
+							<button ng-click="checkOut()" type="button"
+								class="btn btn-success pull-right">Checkout</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	</div>
+		</div>
+		</div>
+		</div>
+	</div>
+
+	
+</body>
+</html>
